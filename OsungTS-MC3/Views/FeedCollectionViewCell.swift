@@ -161,9 +161,8 @@ private extension FeedCollectionViewCell {
             ellipsisButtonConstraints,
             // Content
             feedContentViewConstraints
+            feedViewContraints,
         ].forEach { NSLayoutConstraint.activate($0) }
-
-        NSLayoutConstraint.activate(feedViewContraints)
     }
 }
 
