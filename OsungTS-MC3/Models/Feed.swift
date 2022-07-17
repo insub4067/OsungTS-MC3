@@ -10,6 +10,8 @@ import Foundation
 struct Feed {
     let username: String
     let profileImage: String
+    let image: String
+    let author: String
     let title: String
     let hashTags: [HashTag]
 }
