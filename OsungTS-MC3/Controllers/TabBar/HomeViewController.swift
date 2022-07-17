@@ -10,11 +10,11 @@ import UIKit
 class HomeViewController: UIViewController {
     
     private var feeds: [Feed] = [
-        Feed(username: "Woody", profileImage: "profileImage", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
-        Feed(username: "Woody", profileImage: "profileImage", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
-        Feed(username: "Woody", profileImage: "profileImage", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
-        Feed(username: "Woody", profileImage: "profileImage", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
-        Feed(username: "Woody", profileImage: "profileImage", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")])
+        Feed(username: "Woody", profileImage: "profileImage", image: "wooluck", author: "alice", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
+        Feed(username: "Woody", profileImage: "profileImage", image: "wooluck", author: "alice", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
+        Feed(username: "Woody", profileImage: "profileImage", image: "wooluck", author: "alice", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
+        Feed(username: "Woody", profileImage: "profileImage", image: "wooluck", author: "alice", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")]),
+        Feed(username: "Woody", profileImage: "profileImage", image: "wooluck", author: "alice", title: "우럭먹다 받은 영감", hashTags: [HashTag(hashTag: "#Guitar"), HashTag(hashTag: "#Jazz")])
     ]
     
     private let feedCollectionView: UICollectionView = {
@@ -79,13 +79,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         return cell
     }
 
+    // Cell Spacing
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         30.0
     }
     
     // Cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width - 32.0, height: 524)
+        return CGSize(width: view.bounds.width - 32.0, height: 550)
     }
     
 }
