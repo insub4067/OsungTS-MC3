@@ -15,6 +15,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fill
+        stackView.spacing = 16.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -25,6 +26,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.spacing = 8.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -39,16 +41,6 @@ class FeedCollectionViewCell: UICollectionViewCell {
         stackView.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
         stackView.layer.borderWidth = 1
         return stackView
-    }()
-    
-    private let spacer1: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    private let spacer2: UIView = {
-        let view = UIView()
-        return view
     }()
     
     // username
@@ -95,7 +87,7 @@ class FeedCollectionViewCell: UICollectionViewCell {
     }
         
     // configure
-    public func configure(with feed: Feed) {
+    func configure(with feed: Feed) {
         
         username.text = feed.username
         profileImage.image = UIImage(named: feed.profileImage)
@@ -106,95 +98,71 @@ class FeedCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension FeedCollectionViewCell {
+private extension FeedCollectionViewCell {
     
     func configureFeedView() {
-        
         // 전체
         contentView.addSubview(feedView)
         
         addItemsInfeedView()
         addItemsInFeedUpperBar()
-        addItemsInFeedContentView()
-        
+
         applyConstraints()
     }
     
     func addItemsInfeedView() {
-        feedView.addArrangedSubview(feedUpperBar)
-        feedView.addArrangedSubview(spacer2)
-        feedView.addArrangedSubview(feedContentView)
+        [feedUpperBar, feedContentView]
+            .forEach { feedView.addArrangedSubview($0) }
     }
     
     func addItemsInFeedUpperBar() {
-        feedUpperBar.addArrangedSubview(profileImage)
-        feedUpperBar.addArrangedSubview(spacer1)
-        feedUpperBar.addArrangedSubview(username)
-        feedUpperBar.addArrangedSubview(ellipsisButton)
-    }
-    
-    func addItemsInFeedContentView() {
-        
+        [profileImage, username, ellipsisButton]
+            .forEach { feedUpperBar.addArrangedSubview($0) }
     }
     
     func applyConstraints() {
+
+        let feedViewContraints = [
+            feedView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            feedView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            feedView.topAnchor.constraint(equalTo: topAnchor),
+            feedView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ]
         
         let feedUpperBarContraints = [
-            feedUpperBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            feedUpperBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            feedUpperBar.topAnchor.constraint(equalTo: contentView.topAnchor),
-            feedUpperBar.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: 30)
-//            feedUpperBar.heightAnchor.constraint(equalToConstant: 30),
+            feedUpperBar.heightAnchor.constraint(equalToConstant: 30.0),
+            feedUpperBar.widthAnchor.constraint(equalTo: feedView.widthAnchor)
         ]
 
         let profileImageConstraints = [
-            profileImage.leadingAnchor.constraint(equalTo: feedUpperBar.leadingAnchor, constant: 10),
-            profileImage.topAnchor.constraint(equalTo: feedUpperBar.topAnchor),
-            profileImage.widthAnchor.constraint(equalToConstant: 30),
-            profileImage.heightAnchor.constraint(equalToConstant: 30)
-        ]
-
-        let spacer1Constraints = [
-            spacer1.widthAnchor.constraint(equalToConstant: 10),
-            spacer1.heightAnchor.constraint(equalToConstant: 10)
-        ]
-        
-        let spacer2Constraints = [
-            spacer2.widthAnchor.constraint(equalToConstant: 10),
-            spacer2.heightAnchor.constraint(equalToConstant: 10)
+            profileImage.heightAnchor.constraint(equalTo: feedUpperBar.heightAnchor),
+            profileImage.widthAnchor.constraint(equalToConstant: 30)
         ]
         
         let usernameConstraints = [
-            username.leadingAnchor.constraint(equalTo: spacer1.trailingAnchor, constant: 100),
-            username.topAnchor.constraint(equalTo: feedUpperBar.topAnchor),
-            username.widthAnchor.constraint(equalToConstant: 100),
-            username.heightAnchor.constraint(equalToConstant: 30)
+            username.centerYAnchor.constraint(equalTo: feedUpperBar.centerYAnchor),
         ]
 
         let ellipsisButtonConstraints = [
-            ellipsisButton.trailingAnchor.constraint(equalTo: feedUpperBar.trailingAnchor, constant: -10),
-            ellipsisButton.topAnchor.constraint(equalTo: feedUpperBar.topAnchor),
             ellipsisButton.widthAnchor.constraint(equalToConstant: 30),
-            ellipsisButton.heightAnchor.constraint(equalToConstant: 30)
+            ellipsisButton.heightAnchor.constraint(equalTo: feedUpperBar.heightAnchor),
         ]
         
         let feedContentViewConstraints = [
-            feedContentView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            feedContentView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            feedContentView.topAnchor.constraint(equalTo: feedUpperBar.bottomAnchor, constant: 10),
-            feedContentView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            feedContentView.widthAnchor.constraint(equalTo: feedView.widthAnchor)
         ]
-        
-        // UpperBar
-        NSLayoutConstraint.activate(feedUpperBarContraints)
-        NSLayoutConstraint.activate(profileImageConstraints)
-        NSLayoutConstraint.activate(spacer1Constraints)
-        NSLayoutConstraint.activate(usernameConstraints)
-        NSLayoutConstraint.activate(ellipsisButtonConstraints)
-        
-        // Content
-        NSLayoutConstraint.activate(feedContentViewConstraints)
-        NSLayoutConstraint.activate(spacer2Constraints)
+
+        [
+            feedViewContraints,
+            // UpperBar
+            feedUpperBarContraints,
+            profileImageConstraints,
+            usernameConstraints,
+            ellipsisButtonConstraints,
+            // Content
+            feedContentViewConstraints
+            feedViewContraints,
+        ].forEach { NSLayoutConstraint.activate($0) }
     }
 }
 
